@@ -1,0 +1,201 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="./media/matrix.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords"
+        content="matrix,matrix multiplication,matrix addition, matrix transpose,matrix substracton,random,matrix operations">
+    <meta name="description" content="calculate matrix operations.addition substraction multiplication transpose">
+    <meta name="author" content="Creationology">
+    <meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+    <title>Matrix cal</title>
+    <link rel="stylesheet" href="./css/loading.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/matrix.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body onload="loading()">
+    <section id="loader" class="flex centerAlign" style="flex-direction: column;">
+
+        <div class="flex centerAlign">
+
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </div>
+        <p><span>loading...</span></p>
+    </section>
+
+    <section style="position: relative; filter: blur(5px);" id="contained">
+
+        <p class="header"> Matrix Operations</p>
+        <hr>
+        <!-- matrix input section -->
+        <section class="container flex flexWrap centerAlign">
+            <!-- Matrix A -->
+            <div class="matrixBox border">
+                <p class="flex centerAlign">
+                    Matrix:A
+                </p>
+
+                <!-- index showing box -->
+                <div class="size flex flexWrap centerAlign">
+                    <span>Size of matrix </span>
+                    <span> <input type="number" value="3" placeholder="row" required id="matA-Row" readonly> X <input
+                            type="number" value="3" placeholder="column" required id="matA-Col" readonly></span>
+                    <P>
+                        <button class="arrow" onclick="addNewRow(matTable[0],Number(rowA.value),Number(colA.value))"><i
+                                class="fa fa-plus-circle" aria-hidden="true"></i> row</button>
+                        <button class="arrow" onclick="removeRow(matTable[0])"><i class="fa fa-minus-circle"
+                                aria-hidden="true"></i> row</button>
+                        <button class="arrow" onclick="addNewCol(matTable[0],Number(rowA.value),Number(colA.value))"><i
+                                class="fa fa-plus-circle" aria-hidden="true"></i> col</button>
+
+                        <button class="arrow" onclick="removeCol(matTable[0],Number(rowA.value),Number(colA.value))"><i
+                                class="fa fa-minus-circle" aria-hidden="true"></i> col</button>
+                    </P>
+
+                </div>
+
+                <div class="flex centerAlign matrixInputSection" id="matA">
+
+                </div>
+                <hr>
+                <div class="flex centerAlign additionalFeatures">
+                    <button onclick="transposeMatrix(matTable[0])">transpose</button>
+                    <button onclick="identityMatrix(matTable[0],Number(rowA.value),Number(colA.value))">identity
+                        matrix</button>
+                    <button onclick="randomMatrix(matTable[0])"><i class="fa fa-random" aria-hidden="true"></i> random
+                        entries</button>
+                    <button onclick="resetMatrix(matTable[0])"><i class="fa fa-refresh" aria-hidden="true"></i> reset
+                        entries</button>
+                </div>
+            </div>
+
+            <!-- Matrix B -->
+            <div class="matrixBox border ">
+                <p class="flex centerAlign">Matrix:B</p>
+                <div class="size flex flexWrap centerAlign">
+                    <span>Size of matrix </span>
+                    <span> <input type="number" value="3" placeholder="row" required readonly id="matB-Row"> X
+                        <input type="number" value="3" placeholder="column" required readonly id="matB-Col"></span>
+                    <P>
+                        <button class="arrow" onclick="addNewRow(matTable[1],Number(rowB.value),Number(colB.value))"><i
+                                class="fa fa-plus-circle" aria-hidden="true"></i> row</button>
+                        <button class="arrow" onclick="removeRow(matTable[1])"><i class="fa fa-minus-circle"
+                                aria-hidden="true"></i> row</button>
+                        <button class="arrow" onclick="addNewCol(matTable[1],Number(rowB.value),Number(colB.value))"><i
+                                class="fa fa-plus-circle" aria-hidden="true"></i> col</button>
+
+                        <button class="arrow" onclick="removeCol(matTable[1],Number(rowB.value),Number(colB.value))"><i
+                                class="fa fa-minus-circle" aria-hidden="true"></i> col</button>
+                    </P>
+
+                </div>
+
+                <div class="flex centerAlign matrixInputSection" id="matB">
+                </div>
+                <hr>
+
+                <!-- additional features -->
+                <div class="flex centerAlign additionalFeatures">
+                    <button onclick="transposeMatrix(matTable[1])">transpose</button>
+                    <button onclick="identityMatrix(matTable[1],Number(rowB.value),Number(colB.value))">identity
+                        matrix</button>
+                    <button onclick="randomMatrix(matTable[1])"><i class="fa fa-random" aria-hidden="true"></i> random
+                        entries</button>
+                    <button onclick="resetMatrix(matTable[1])"><i class="fa fa-refresh" aria-hidden="true"></i> reset
+                        entries</button>
+
+                </div>
+            </div>
+
+        </section>
+        <hr>
+        <!-- click operaion section -->
+        <section class="buttons flex flexWrap centerAlign">
+            <button onclick="addMatrix()">Addition</button>
+            <button onclick="subMatrix()">Substraction</button>
+            <button onclick="multMatrix()">Multiplication</button>
+
+
+        </section>
+        <hr>
+        <!-- error section -->
+        <section class="flex centerAlign" id="errorContainer">
+            <div>
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+
+                <p style="width: 90%;">
+
+                </p>
+                <i class="fa fa-times-circle" onclick="errorShow('hide','abc')" aria-hidden="true"
+                    style=" cursor:pointer;opacity:0.8;float:right; padding:5px; font-size:25px;">close</i>
+            </div>
+        </section>
+
+        <!-- result section -->
+        <section class="container flex flexWrap centerAlign" id="resultContainer">
+            <div class="matrixBox border ">
+                <p class="flex centerAlign">RESULT |<span id="operation"></span></p>
+                <div class="size flex flexWrap centerAlign ">
+                    <span>Size of matrix </span>
+                    <span> <input type="number" value="" placeholder="row" required id="result-Row" readonly> X <input
+                            type="number" value="" placeholder="column" required id="result-Col" readonly></span>
+                </div>
+                <div class="flex centerAlign matrixResultSection">
+                    <section id="result"></section>
+                </div>
+                <hr>
+                <div class="flex centerAlign additionalFeatures">
+                    <button onclick="swapResult(matTable[0],Number(rowR.value),Number(colR.value))">result to
+                        matrixA</button>
+                    <button onclick="swapResult(matTable[1],Number(rowR.value),Number(colR.value))">result to
+                        matrixB</button>
+
+                </div>
+        </section>
+
+        </div>
+
+    </section>
+    <!-- footer section -->
+    <footer>
+
+        <i class="fa fa-copyright"></i> Ayan Pradhan 2022-2023
+        <b><i></i></b>
+        | Designed & Developed with <i class="fa fa-heart" style="color:red"></i> by
+        <p>
+            <Big><b><a href="https://www.linkedin.com/in/ayan-pradhan-160471252"><img src="./media/logo.png" width="150px"
+                            alt=""></b></a></Big>
+        </p>
+
+        Viewing resolution: <span id="deviceResolution" on></span> |<b> Recomended <mark>1366X768</mark></b><br>
+        <script>
+
+            let x = document.querySelector('#deviceResolution');
+            x.innerHTML = window.innerWidth + "X" + window.innerHeight;
+
+        </script>
+
+        <br>Give Feedback: <a href="#"><i class="fa fa-envelope"></i></a>|
+        <a href="#"><i class="fa fa-Fake"></i></a>|
+        <a href="#"><i class="fa fa-twitter"></i></a>|
+        <a href="#"><i class="fa fa-instagram"></i></a>|
+        <a href=""><i class="fa fa-whatsapp"></i></a>|
+        <a href="https://www.linkedin.com/in/ayan-pradhan-160471252"><i class="fa fa-linkedin"></i></a>
+    </footer>
+</body>
+<script async src="./js/matrix.js"></script>
+<script async src="./js/result.js"></script>
+<script async src="./js/matrixaddremove.js"></script>
+<script async src="./js/matrixOperations.js"></script>
+<script async src="./js/specialFetures.js"></script>
+
+</html>

@@ -1,0 +1,55 @@
+#loader {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.822);
+  z-index: 2;
+  color: rgb(255, 255, 255);
+  left: 0%;
+  bottom: 0%;
+  top: 0;
+  width: 100%;
+  min-width: 300px;
+  font: 1.5em sans-serif;
+}
+li {
+  animation: loading 1s ease-in-out infinite;
+}
+li:nth-child() {
+  color: rgb(48, 47, 47);
+}
+li {
+  list-style: square;
+  font-size: 65px;
+}
+
+li:nth-child(even) {
+  animation-direction: alternate;
+}
+li:nth-child(odd) {
+  animation-direction: alternate-reverse;
+}
+
+@keyframes loading {
+  0% {
+    color: rgb(255, 123, 0);
+    transform: translate(0px, -80px);
+  }
+
+  100% {
+    color: white;
+    transform: translate(0px, 0px);
+  }
+}
+@keyframes loadingtext {
+  0% {
+    color: rgb(255, 123, 0);
+    transform: translate(00px, 0px);
+  }
+
+  100% {
+    color: white;
+    transform: translate(20px, 0px);
+  }
+}
+#loader span {
+  animation: loadingtext 1s ease-in-out infinite;
+}
